@@ -28,28 +28,28 @@ The npm/ng logs should be printed as correctly as possible in the maven logs.
 ## Examples
 Execute *npm install* in the *angular* sub-directory of the maven project : 
 ```bash
- ug_dbg@rpi ~/my-project $ mvn com.github.ug_dbg:mvn-npm-plugin:exec -Dnpm.command="install" -Dnpm.workingDir="angular"
+ ug-dbg@rpi ~/my-project $ mvn com.github.ug-dbg:mvn-npm-plugin:exec -Dnpm.command="install" -Dnpm.workingDir="angular"
 ```
 
 Execute *npm run build -- --watch=true* from the package.json file in the *angular* sub-directory of the maven project : 
 ```bash
- ug_dbg@rpi ~/my-project $ mvn com.github.ug_dbg:mvn-npm-plugin:exec -Dnpm.command="run" -Dnpm.args="build -- --watch=true" -Dnpm.workingDir="angular"
+ ug-dbg@rpi ~/my-project $ mvn com.github.ug-dbg:mvn-npm-plugin:exec -Dnpm.command="run" -Dnpm.args="build -- --watch=true" -Dnpm.workingDir="angular"
 ```
 
 Execute the *build:lib* then *build-dev* from the package.json file in the *angular* sub-directory of the maven project : 
 ```bash
- ug_dbg@rpi ~/my-project $ mvn com.github.ug_dbg:mvn-npm-plugin:exec-all -Dnpm.args="build:lib,build:dev" -Dnpm.workingDir="angular"
+ ug-dbg@rpi ~/my-project $ mvn com.github.ug-dbg:mvn-npm-plugin:exec-all -Dnpm.args="build:lib,build:dev" -Dnpm.workingDir="angular"
 ```
 
 Execute the *ng serve --proxy-config proxy.conf.dev.json* in the *angular* sub-directory of the maven project :
 ```bash
- ug_dbg@rpi ~/my-project $ mvn com.github.ug_dbg:mvn-npm-plugin:exec-ng -Dng.command="serve" -Dng.args="--proxy-config proxy.conf.dev.json" -Dnpm.workingDir="angular"
+ ug-dbg@rpi ~/my-project $ mvn com.github.ug-dbg:mvn-npm-plugin:exec-ng -Dng.command="serve" -Dng.args="--proxy-config proxy.conf.dev.json" -Dnpm.workingDir="angular"
 ```
 
 ## Examples for pom configuration
 ```xml
 <plugin>
-    <groupId>com.github.ug_dbg</groupId>
+    <groupId>com.github.ug-dbg</groupId>
     <artifactId>mvn-npm-plugin</artifactId>
     <version>1.0</version>
     <executions>
