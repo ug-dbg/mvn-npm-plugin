@@ -20,6 +20,11 @@
 		<developerConnection>scm:git:git@github.com:ug-dbg/mvn-npm-plugin.git</developerConnection>
 	</scm>
 	
+	<properties>
+		<maven.compiler.source>1.5</maven.compiler.source>
+		<maven.compiler.target>1.5</maven.compiler.target>
+	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
