@@ -11,6 +11,11 @@ import java.util.logging.Level;
  */
 abstract class AbstractMojo extends org.apache.maven.plugin.AbstractMojo {
 	
+	/** 
+	 * Log level of the Mojo logger. 
+	 * Default is INFO. 
+	 * @see java.util.logging.Level#parse 
+	 */
 	@Parameter(property = "log.level")
 	private String logLevel = "INFO";
 	
