@@ -38,7 +38,7 @@ Execute *npm run build -- --watch=true* from the package.json file in the *angul
 
 Execute the *build:lib* then *build-dev* from the package.json file in the *angular* sub-directory of the maven project : 
 ```bash
- ug-dbg@rpi ~/my-project $ mvn com.github.ug-dbg:mvn-npm-plugin:exec-all -Dnpm.args="build:lib,build:dev" -Dnpm.workingDir="angular"
+ ug-dbg@rpi ~/my-project $ mvn com.github.ug-dbg:mvn-npm-plugin:exec-all -Dnpm.command="run" -Dnpm.args="build:lib,build:dev" -Dnpm.workingDir="angular"
 ```
 
 Execute the *ng serve --proxy-config proxy.conf.dev.json* in the *angular* sub-directory of the maven project :
@@ -62,8 +62,8 @@ Execute the *ng serve --proxy-config proxy.conf.dev.json* in the *angular* sub-d
                 <workingDir>angular</workingDir>
                 
                 <!--All the args here will be run as successive 'npm run $args' commands-->
-                <args>build:lib --configuration=dev</args>
-                <args>start-dev -- --watch=true</args>
+                <args>run build:lib --configuration=dev</args>
+                <args>run start:dev -- --watch=true</args>
             </configuration>
         </execution>
     </executions>

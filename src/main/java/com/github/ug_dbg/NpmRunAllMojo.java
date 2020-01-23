@@ -4,6 +4,7 @@ import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteException;
 import org.apache.commons.exec.PumpStreamHandler;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -12,6 +13,10 @@ import org.apache.maven.plugins.annotations.Parameter;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Goal which executes all arguments as npm commands.
@@ -20,13 +25,13 @@ import java.io.IOException;
 public class NpmRunAllMojo extends AbstractMojo {
 
 	/**
-	 * The npm command to execute, such as 'install', 'test', etc. Required.
+	 * An npm command to execute on each arg, such as 'install', 'test', etc. Optional.
 	 */
 	@Parameter(property = "npm.command")
-	private String command = "run";
+	private String command;
 
 	/**
-	 * The arguments to pass to npm command. Optional.
+	 * The arguments to pass as npm commands.
 	 */
 	@Parameter(property = "npm.args")
 	private String[] args;
@@ -46,7 +51,11 @@ public class NpmRunAllMojo extends AbstractMojo {
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		for (String arg : this.args) {
-			CommandLine cmd = this.addCommand(this.getNpmCommand()).addArgument(arg);
+			CommandLine cmd = this.addCommand(this.getNpmCommand());
+			for (String parsedArgument : this.parseArgument(arg)) {
+				cmd = cmd.addArgument(parsedArgument);
+			}
+
 			this.getLog().info("Executing [" + cmd.toString() + "] in [" + this.workingDir.toString() + "]");
 			this.execute(cmd);
 		}
@@ -71,10 +80,30 @@ public class NpmRunAllMojo extends AbstractMojo {
 	}
 
 	protected CommandLine addCommand(CommandLine cmdLine) {
-		return cmdLine.addArgument(this.command);
+		return StringUtils.isBlank(this.command) ? cmdLine : cmdLine.addArgument(this.command);
 	}
 
 	protected CommandLine getNpmCommand() {
 		return getCommand("npm", this.npmHome);
+	}
+
+	/**
+	 * Parse an argument as an arguments String, with respect to quoted ("") elements.
+	 * @param argument the argument to parse
+	 * @return a list of command line arguments
+	 */
+	protected List<String> parseArgument(String argument) {
+		// Regular expression hint :
+		//[^"]  → token starting with something other than "
+		//\S*   → followed by zero or more non-space characters
+		// OR
+		//".+?" → a "-symbol followed by whatever, until another ".
+		Pattern pattern = Pattern.compile("([^\"]\\S*|\".+?\")\\s*");
+		Matcher matcher = pattern.matcher(argument);
+		List<String> arguments = new ArrayList<String>();
+		while (matcher.find()) {
+			arguments.add(matcher.group(1));
+		}
+		return arguments;
 	}
 }
