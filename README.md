@@ -12,6 +12,13 @@ The npm/ng logs should be printed as correctly as possible in the maven logs.
 - **exec-ng**  : execute an Angular ng command with arguments from a working directory
 
 ## Parameters
+- clean: 
+  - **npm.workingDir**        : the working directory
+  - **npm.distDir**           : the dist directory name to delete
+  - **npm.nodeModulesDir**    : the node_modules folder name, default is 'node_modules'
+  - **npm.packageLockFile**   : the package-lock file name, default is 'package-lock.json'
+  - **npm.deleteNodeModules** : if true, delete the node_modules folder
+  - **npm.deletePackageLock** : if true, delete the package-lock file
 - exec/exec-all :
   - **npm.command**    : the npm command to run
   - **npm.args**       : the npm arguments
@@ -22,7 +29,7 @@ The npm/ng logs should be printed as correctly as possible in the maven logs.
   - **ng.args**       : the ng arguments
   - **ng.workingDir** : the working directory
   - **ng.home**       : the directory that contains the ng executable. If not set, assume present in system path.
-- all : 
+- all goals : 
   - **log.level** : the default log level of the logger *(see java.util.logging.Level#parse)*
 
 ## Examples
@@ -51,7 +58,7 @@ Execute the *ng serve --proxy-config proxy.conf.dev.json* in the *angular* sub-d
 <plugin>
     <groupId>com.github.ug-dbg</groupId>
     <artifactId>mvn-npm-plugin</artifactId>
-    <version>1.1</version>
+    <version>1.2-SNAPSHOT</version>
     <executions>
         <execution>
             <goals>
