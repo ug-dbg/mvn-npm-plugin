@@ -50,7 +50,7 @@ public class NpmMojo extends AbstractMojo {
 		this.execute(cmd);
 	}
 
-	protected void execute(CommandLine cmdLine) throws MojoFailureException, MojoExecutionException {
+	private void execute(CommandLine cmdLine) throws MojoFailureException, MojoExecutionException {
 		try {
 			
 			DefaultExecutor executor = new DefaultExecutor();
@@ -69,15 +69,15 @@ public class NpmMojo extends AbstractMojo {
 		}
 	}
 
-	protected CommandLine addCommand(CommandLine cmdLine) {
+	private CommandLine addCommand(CommandLine cmdLine) {
 		return cmdLine.addArgument(this.command);
 	}
 
-	protected CommandLine addArguments(CommandLine cmdLine) {
+	private CommandLine addArguments(CommandLine cmdLine) {
 		return cmdLine.addArguments(this.args);
 	}
 
-	protected CommandLine getNpmCommand() {
+	private CommandLine getNpmCommand() {
 		return getCommand("npm", this.npmHome);
 	}
 }

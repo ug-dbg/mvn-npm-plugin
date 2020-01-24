@@ -52,7 +52,7 @@ public class AngularMojo extends AbstractMojo {
 		}
 	}
 	
-	protected void execute(CommandLine cmdLine) throws MojoExecutionException, MojoFailureException {
+	private void execute(CommandLine cmdLine) throws MojoExecutionException, MojoFailureException {
 		try {
 			DefaultExecutor executor = new DefaultExecutor();
 			executor.setWorkingDirectory(this.workingDir);
@@ -70,15 +70,11 @@ public class AngularMojo extends AbstractMojo {
 		}
 	}
 	
-	protected CommandLine addCommand(CommandLine cmdLine) {
+	private CommandLine addCommand(CommandLine cmdLine) {
 		return cmdLine.addArgument(this.command);
 	}
 
-	protected CommandLine addArguments(CommandLine cmdLine) {
-		return cmdLine.addArguments(this.args);
-	}
-
-	protected CommandLine getNGCommand() {
+	private CommandLine getNGCommand() {
 		return getCommand("ng", this.ngHome);
 	}
 }

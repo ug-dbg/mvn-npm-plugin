@@ -61,7 +61,7 @@ public class NpmRunAllMojo extends AbstractMojo {
 		}
 	}
 
-	protected void execute(CommandLine cmdLine) throws MojoFailureException, MojoExecutionException {
+	private void execute(CommandLine cmdLine) throws MojoFailureException, MojoExecutionException {
 		try {
 			DefaultExecutor executor = new DefaultExecutor();
 			executor.setWorkingDirectory(this.workingDir);
@@ -79,11 +79,11 @@ public class NpmRunAllMojo extends AbstractMojo {
 		}
 	}
 
-	protected CommandLine addCommand(CommandLine cmdLine) {
+	private CommandLine addCommand(CommandLine cmdLine) {
 		return StringUtils.isBlank(this.command) ? cmdLine : cmdLine.addArgument(this.command);
 	}
 
-	protected CommandLine getNpmCommand() {
+	private CommandLine getNpmCommand() {
 		return getCommand("npm", this.npmHome);
 	}
 
@@ -92,7 +92,7 @@ public class NpmRunAllMojo extends AbstractMojo {
 	 * @param argument the argument to parse
 	 * @return a list of command line arguments
 	 */
-	protected List<String> parseArgument(String argument) {
+	private List<String> parseArgument(String argument) {
 		// Regular expression hint :
 		//[^"]  → token starting with something other than "
 		//\S*   → followed by zero or more non-space characters
