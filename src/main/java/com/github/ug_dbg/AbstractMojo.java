@@ -16,8 +16,8 @@ abstract class AbstractMojo extends org.apache.maven.plugin.AbstractMojo {
 	 * Default is INFO. 
 	 * @see java.util.logging.Level#parse 
 	 */
-	@Parameter(property = "log.level")
-	private String logLevel = "INFO";
+	@Parameter(property = "log.level", defaultValue = "INFO")
+	private String logLevel;
 	
 	Level logLevel() {
 		try {
