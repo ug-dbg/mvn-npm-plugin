@@ -4,7 +4,11 @@ import org.apache.commons.exec.CommandLine;
 import org.apache.maven.plugins.annotations.Parameter;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A mojo with a given log level that can be set using a property parameter.
@@ -44,5 +48,25 @@ abstract class AbstractMojo extends org.apache.maven.plugin.AbstractMojo {
 		} else {
 			return new CommandLine(cmdValue);
 		}
+	}
+	
+	/**
+	 * Parse an argument as an arguments String, with respect to quoted ("") elements.
+	 * @param argument the argument to parse
+	 * @return a list of command line arguments
+	 */
+	protected static List<String> parseArgument(String argument) {
+		// Regular expression hint :
+		//[^"]  → token starting with something other than "
+		//\S*   → followed by zero or more non-space characters
+		// OR
+		//".+?" → a "-symbol followed by whatever, until another ".
+		Pattern pattern = Pattern.compile("([^\"]\\S*|\".+?\")\\s*");
+		Matcher matcher = pattern.matcher(argument);
+		List<String> arguments = new ArrayList<String>();
+		while (matcher.find()) {
+			arguments.add(matcher.group(1));
+		}
+		return arguments;
 	}
 }

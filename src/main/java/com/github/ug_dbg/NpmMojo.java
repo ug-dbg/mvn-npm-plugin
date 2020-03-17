@@ -6,12 +6,14 @@ import org.apache.commons.exec.ExecuteException;
 import org.apache.commons.exec.PumpStreamHandler;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
 
 /**
  * Goal which executes npm.
@@ -51,13 +53,23 @@ public class NpmMojo extends AbstractMojo {
 	}
 
 	private void execute(CommandLine cmdLine) throws MojoFailureException, MojoExecutionException {
+		execute(cmdLine, this.workingDir, this.getLog(), this.logLevel());
+	}
+	
+	protected static void execute(
+		CommandLine cmdLine, 
+		File workingDir, 
+		Log log, 
+		Level level) 
+		throws MojoFailureException, MojoExecutionException {
+		
 		try {
 			
 			DefaultExecutor executor = new DefaultExecutor();
-			executor.setWorkingDirectory(this.workingDir);
+			executor.setWorkingDirectory(workingDir);
 			executor.setStreamHandler(new PumpStreamHandler(
-				new LogHandler.StdOut(this.getLog(), this.logLevel(), "npm ERR", "npm WARN", "npm notice"), 
-				new LogHandler.StdErr(this.getLog(), this.logLevel(), "npm ERR", "npm WARN", "npm notice"), 
+				new LogHandler.StdOut(log, level, "npm ERR", "npm WARN", "npm notice"), 
+				new LogHandler.StdErr(log, level, "npm ERR", "npm WARN", "npm notice"), 
 				System.in
 			));
 

@@ -46,7 +46,11 @@ public class AngularMojo extends AbstractMojo {
 	
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		for (String arg : this.args) {
-			CommandLine cmd = this.addCommand(this.getNGCommand()).addArgument(arg);
+			CommandLine cmd = this.addCommand(this.getNGCommand());
+			for (String parsedArgument : parseArgument(arg)) {
+				cmd = cmd.addArgument(parsedArgument);
+			}
+			
 			this.getLog().info("Executing [" + cmd.toString() + "] in [" + this.workingDir.toString() + "]");
 			this.execute(cmd);
 		}
