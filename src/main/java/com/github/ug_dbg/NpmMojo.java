@@ -53,12 +53,13 @@ public class NpmMojo extends AbstractMojo {
 	}
 
 	private void execute(CommandLine cmdLine) throws MojoFailureException, MojoExecutionException {
-		execute(cmdLine, this.workingDir, this.getLog(), this.logLevel());
+		execute(cmdLine, this.workingDir, this.useLogHandler(), this.getLog(), this.logLevel());
 	}
 	
 	protected static void execute(
 		CommandLine cmdLine, 
 		File workingDir, 
+		boolean useLogHandler,
 		Log log, 
 		Level level) 
 		throws MojoFailureException, MojoExecutionException {
@@ -67,11 +68,14 @@ public class NpmMojo extends AbstractMojo {
 			
 			DefaultExecutor executor = new DefaultExecutor();
 			executor.setWorkingDirectory(workingDir);
-			executor.setStreamHandler(new PumpStreamHandler(
-				new LogHandler.StdOut(log, level, "npm ERR", "npm WARN", "npm notice"), 
-				new LogHandler.StdErr(log, level, "npm ERR", "npm WARN", "npm notice"), 
-				System.in
-			));
+			
+			if (useLogHandler) {
+				executor.setStreamHandler(new PumpStreamHandler(
+					new LogHandler.StdOut(log, level, "npm ERR", "npm WARN", "npm notice"),
+					new LogHandler.StdErr(log, level, "npm ERR", "npm WARN", "npm notice"),
+					System.in
+				));
+			}
 
 			executor.execute(cmdLine);
 		} catch (ExecuteException e) {

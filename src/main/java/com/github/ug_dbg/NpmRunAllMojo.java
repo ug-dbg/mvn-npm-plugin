@@ -54,7 +54,7 @@ public class NpmRunAllMojo extends AbstractMojo {
 	}
 
 	private void execute(CommandLine cmdLine) throws MojoFailureException, MojoExecutionException {
-		NpmMojo.execute(cmdLine, this.workingDir, this.getLog(), this.logLevel());
+		NpmMojo.execute(cmdLine, this.workingDir, this.useLogHandler(), this.getLog(), this.logLevel());
 	}
 
 	private CommandLine addCommand(CommandLine cmdLine) {

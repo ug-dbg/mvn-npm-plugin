@@ -14,6 +14,12 @@ import java.util.regex.Pattern;
  * A mojo with a given log level that can be set using a property parameter.
  */
 abstract class AbstractMojo extends org.apache.maven.plugin.AbstractMojo {
+
+	/**
+	 * If true, try to redirect the NPM output to a log handler so it integrates nicely into maven output.
+	 */
+	@Parameter(property = "log.handler", defaultValue = "true")
+	private boolean useLogHandler;
 	
 	/** 
 	 * Log level of the Mojo logger. 
@@ -30,6 +36,14 @@ abstract class AbstractMojo extends org.apache.maven.plugin.AbstractMojo {
 			this.getLog().warn("Error reading log level [" + this.logLevel + "]. Using INFO.");
 		}
 		return Level.INFO;
+	}
+
+	/**
+	 * Should we try to redirect the NPM output to a log handler so it integrates nicely into maven output ?
+	 * @return {@link #useLogHandler}
+	 */
+	protected boolean useLogHandler() {
+		return this.useLogHandler;
 	}
 	
 	protected static boolean isWindows() {

@@ -60,11 +60,14 @@ public class AngularMojo extends AbstractMojo {
 		try {
 			DefaultExecutor executor = new DefaultExecutor();
 			executor.setWorkingDirectory(this.workingDir);
-			executor.setStreamHandler(new PumpStreamHandler(
-				new LogHandler.StdOut(this.getLog(), this.logLevel(), "ERROR", "WARNING", "DEBUG"), 
-				new LogHandler.StdErr(this.getLog(), this.logLevel(), "ERROR", "WARNING", "DEBUG"),  
-				System.in
-			));
+			
+			if (this.useLogHandler()) {
+				executor.setStreamHandler(new PumpStreamHandler(
+					new LogHandler.StdOut(this.getLog(), this.logLevel(), "ERROR", "WARNING", "DEBUG"),
+					new LogHandler.StdErr(this.getLog(), this.logLevel(), "ERROR", "WARNING", "DEBUG"),
+					System.in
+				));
+			}
 
 			executor.execute(cmdLine);
 		} catch (ExecuteException e) {
