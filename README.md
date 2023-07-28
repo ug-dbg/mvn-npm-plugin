@@ -65,7 +65,7 @@ Execute the *ng serve --proxy-config proxy.conf.dev.json* in the *angular* sub-d
 <plugin>
     <groupId>com.github.ug-dbg</groupId>
     <artifactId>mvn-npm-plugin</artifactId>
-    <version>1.4</version>
+    <version>1.5</version>
     <executions>
         <execution>
             <goals>
