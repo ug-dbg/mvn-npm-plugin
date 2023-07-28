@@ -10,6 +10,7 @@ The npm/ng logs should be printed as correctly as possible in the maven logs.
 - **exec**     : execute an npm command with argument from a working directory
 - **exec-all** : execute all arguments as several *npm run* commands from a working directory
 - **exec-ng**  : execute an Angular ng command with arguments from a working directory
+- **version**  : Set the version attribute in a target package.json (or any json) file
 
 ## Parameters
 - clean: 
@@ -29,6 +30,12 @@ The npm/ng logs should be printed as correctly as possible in the maven logs.
   - **ng.args**       : the ng arguments
   - **ng.workingDir** : the working directory
   - **ng.home**       : the directory that contains the ng executable. If not set, assume present in system path.
+- version : 
+  - **npm.workingDir**                   : the working directory, default is basedir
+  - **npm.packageJsonFile**              : the package.json file name, default is "package.json"
+  - **npm.packageJsonFileVersion**      : the version to set
+  - **npm.packageJsonFileIndentFactor** : the output indentation factor, default is 1
+  - **npm.packageJsonFileIndentChars**  : the output indentation characters, "SPACE" or "TAB", default is "SPACE"
 - all goals : 
   - **log.level** : the default log level of the logger *(see java.util.logging.Level#parse)*
 
